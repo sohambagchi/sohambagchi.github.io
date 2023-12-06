@@ -206,6 +206,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - backup
 keep_files:
   - CNAME
   - .nojekyll
