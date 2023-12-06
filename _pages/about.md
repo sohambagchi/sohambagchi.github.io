@@ -9,9 +9,7 @@ profile:
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>2170, Merrill Engineering Building</p>
-    <p>50 Central Campus Drive</p>
-    <p>Salt Lake City, Utah - 84112</p>
+    <p>soham (dot) bagchi (at) utah (dot) edu</p>
 
 # news: true  # includes a list of news items
 # latest_posts: true  # includes a list of the newest posts
