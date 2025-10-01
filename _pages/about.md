@@ -17,4 +17,4 @@ profile:
 social: true  # includes social icons at the bottom of the page
 ---
 
-I'm a first year PhD Student at [The University of Utah](https://www.utah.edu/) under [Professor Vijay Nagarajan](https://users.cs.utah.edu/~vijay/) at the [Utah Architecture Research Group](https://arch.cs.utah.edu/). I'm working on Distributed Systems, Serverless Environments and Cloud Deployment Strategies. 
+I'm a third year PhD Student at [The University of Utah](https://www.utah.edu/) under [Professor Vijay Nagarajan](https://users.cs.utah.edu/~vijay/) at the [Utah Architecture Research Group](https://arch.cs.utah.edu/). I'm working on Distributed Systems, Serverless Environments and Cloud Deployment Strategies. 
