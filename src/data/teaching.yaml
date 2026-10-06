@@ -9,6 +9,9 @@ courses:
     lecture_label: Lectures
     lectures: The Cache and Memory Hierarchy (two lectures)
     extra: Part of Prof. Erin Parker's Teaching CS in Higher Education.
+    links:
+      - { label: caches.sohambagchi.com, href: 'https://caches.sohambagchi.com' }
+      - { label: bits.sohambagchi.com, href: 'https://bits.sohambagchi.com' }
   - term: Spring
     year: 2025
     role: Graduate TA
@@ -23,6 +26,8 @@ courses:
     place: University of Utah
     instructor: Prof. Vijay Nagarajan
     lectures: Instruction Set Architectures
+    links:
+      - { label: coherence.sohambagchi.com, href: 'https://coherence.sohambagchi.com' }
   - term: Spring
     year: 2023
     role: Undergraduate TA

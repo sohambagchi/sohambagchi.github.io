@@ -3,6 +3,7 @@
 // instead of re-implementing their DOM in .astro files.
 import { createElement as h, Fragment, type ReactNode } from 'react';
 import { Badge } from '../components/sobar/display/Badge.jsx';
+import { Link } from '../components/sobar/core/Link.jsx';
 import { teaching } from './data';
 import type { Publication } from './collections';
 
@@ -20,6 +21,9 @@ export function teachingItems(): TimelineItem[] {
       `Instructor: ${c.instructor}.`,
       c.lectures ? ` ${c.lecture_label}: ${c.lectures}.` : null,
       c.extra ? ` ${c.extra}` : null,
+      c.links.length > 0
+        ? h('span', { className: 'tl-links' }, c.links.map((l) => h(Link, { key: l.href, href: l.href, external: true }, l.label)))
+        : null,
       c.award ? h('span', { className: 'award' }, h(Badge, null, c.award)) : null,
     ),
   }));

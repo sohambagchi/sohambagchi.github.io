@@ -30,6 +30,7 @@ export const teaching = load('teaching.yaml', z.object({
     role: z.string(), course: z.string(), place: z.string(), instructor: z.string(),
     lecture_label: z.string().default('Lecture'), lectures: z.string().optional(),
     extra: z.string().optional(), award: z.string().optional(),
+    links: z.array(link).default([]),
   })),
   tools: z.array(z.object({ title: z.string(), summary: z.string().optional(), href: z.string() })).default([]),
 }));
