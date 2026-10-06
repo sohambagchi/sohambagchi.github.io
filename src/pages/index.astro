@@ -6,15 +6,20 @@ import { Link } from '../components/sobar/core/Link.jsx';
 import { home, site } from '../lib/data';
 import { inlineMd } from '../lib/md';
 import { getPublications } from '../lib/collections';
+import { dateSortKey } from '../lib/format';
 
 const byKey = new Map((await getPublications()).map((p) => [p.id, p]));
 
-const history = home.history.map((entry) => {
-  if (!entry.pub) return { ...entry, paper: null };
-  const paper = byKey.get(entry.pub);
-  if (!paper) throw new Error(`home.yaml: history entry cites "${entry.pub}", which is not a key in publications.bib`);
-  return { ...entry, paper };
-});
+// Newest first, whatever order home.yaml happens to be in. Entries dated by year alone sit
+// below the ones with a month in that year; ties keep the order they are written in.
+const history = home.history
+  .map((entry) => {
+    if (!entry.pub) return { ...entry, paper: null };
+    const paper = byKey.get(entry.pub);
+    if (!paper) throw new Error(`home.yaml: history entry cites "${entry.pub}", which is not a key in publications.bib`);
+    return { ...entry, paper };
+  })
+  .sort((a, b) => dateSortKey(b.date) - dateSortKey(a.date));
 
 const external = (href: string) => /^https?:\/\//i.test(href);
 ---

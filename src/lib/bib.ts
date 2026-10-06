@@ -4,6 +4,7 @@
 import type { Loader } from 'astro/loaders';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { monthNumber } from './format';
 
 type Raw = { key: string; type: string; fields: Record<string, string> };
 
@@ -55,6 +56,7 @@ export function toPublication({ type, fields: f }: Raw) {
     venueField, venue: f[venueField] ?? '',
     series: f.series, address: f.address,
     year: Number(f.year),
+    month: f.month ? monthNumber(f.month) : undefined,
     doi: f.doi, highlight: f.highlight,
     links: LINKS.filter(([k]) => f[k]).map(([k, label]) => ({ label, href: f[k] })),
   };

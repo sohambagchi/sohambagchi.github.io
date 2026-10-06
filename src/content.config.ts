@@ -17,6 +17,7 @@ const publications = defineCollection({
     series: z.string().optional(),
     address: z.string().optional(),
     year,
+    month: z.number().int().min(1).max(12).optional(),
     doi: z.string().optional(),
     highlight: z.string().optional(),
     links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),

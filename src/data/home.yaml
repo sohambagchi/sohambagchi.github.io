@@ -12,17 +12,19 @@ options:
   - { short: "-g", long: "--github",   label: "github.com/sohambagchi",        href: "https://github.com/sohambagchi" }
   - { short: "-l", long: "--linkedin", label: "linkedin.com/in/soham-bagchi",  href: "https://www.linkedin.com/in/soham-bagchi" }
   - { short: "-c", long: "--cv",       label: "Curriculum vitae (PDF)",        href: "/soham-bagchi-cv.pdf" }
-# Newest first. "pub" takes a key from publications.bib: the paper title is rendered as a
-# link to /publications#<key>, followed by "text".
+# The page sorts this newest first by "date" ("Apr 2026" before a bare "2026" in the same year),
+# so entries that share a date show up in the order they are written here — keep those newest first
+# too. "pub" takes a key from publications.bib: the paper title is rendered as a link to
+# /publications#<key>, followed by "text".
 history:
   - date: Apr 2026
     text: Received an Honorable Mention for the Kahlert Impact Prize for service through GradSAC and EGSC.
   - date: "2026"
-    pub: bagchi2026consistency
-    text: accepted at ISMM ’26.
-  - date: "2026"
     pub: bagchi2026beyond
     text: accepted at PLOS ’26.
+  - date: "2026"
+    pub: bagchi2026consistency
+    text: accepted at ISMM ’26.
   - date: "2026"
     pub: kapoor2026formalizing
     text: accepted at ASPLOS ’26.

@@ -16,9 +16,11 @@ export type Project = CollectionEntry<'projects'>;
 export type Post = CollectionEntry<'blog'>;
 export type Creative = CollectionEntry<'creative'>;
 
-/** Newest year first. Sort is stable, so order inside a year is the order in publications.bib. */
+/** Newest first: year descending, then the bib `month` descending. Entries with no month sort
+    below the dated ones in their year; the sort is stable, so those keep publications.bib order. */
 export const getPublications = once(async (): Promise<Publication[]> =>
-  (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year));
+  (await getCollection('publications')).sort(
+    (a, b) => b.data.year - a.data.year || (b.data.month ?? 0) - (a.data.month ?? 0)));
 
 /** Explicit `order` wins; otherwise ongoing first, then end descending, then start descending. */
 export const getProjects = once(async (): Promise<Project[]> => {
