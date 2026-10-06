@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import EntryHead from '../../components/site/EntryHead.astro';
 import CRule from '../../components/site/CRule.astro';
 import { IndexRow } from '../../components/sobar/editorial/IndexRow.jsx';
+import { Link } from '../../components/sobar/core/Link.jsx';
 import { Tag } from '../../components/sobar/display/Tag.jsx';
 import { getProjects, type Project } from '../../lib/collections';
 import { pubRowIndex } from '../../lib/nodes';
@@ -32,6 +33,12 @@ const related = (await Promise.all(p.publications.map((ref) => getEntry(ref)))).
       )}
     </dl>
   </EntryHead>
+
+  {p.links.length > 0 && (
+    <section class="wrap">
+      <div class="pub__above">{p.links.map((l) => <Link href={l.href} external>{l.label}</Link>)}</div>
+    </section>
+  )}
 
   <section class="wrap">
     <div class="ln-prose">

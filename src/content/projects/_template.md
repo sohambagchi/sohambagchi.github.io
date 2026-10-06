@@ -7,6 +7,7 @@ end: present                            # a year, "present", or omit for a singl
 summary: One sentence. Used in the index row and <meta name="description">.
 stack: []
 publications: []                        # keys from publications.bib → "Related" section
+links: []                               # - { label: example.com, href: 'https://example.com' }
 order: 0                                # optional; overrides date sort (lower first)
 draft: true
 ---

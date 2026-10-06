@@ -33,6 +33,7 @@ const projects = defineCollection({
     summary: z.string().max(240),
     stack: z.array(z.string()).default([]),
     publications: z.array(reference('publications')).default([]),
+    links: z.array(z.object({ label: z.string(), href: z.string().url() })).default([]),
     order: z.number().optional(),
     draft: z.boolean().default(false),
   }),
