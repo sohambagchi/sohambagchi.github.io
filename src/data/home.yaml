@@ -5,8 +5,9 @@ tagline: "PhD student in Computer Science, [Kahlert School of Computing, Univers
 description: >-
   I'm a PhD student at the University of Utah, working with
   [Anton Burtsev](https://users.cs.utah.edu/~aburtsev/) on agentic AI that builds isolated,
-  fast userspace drivers — and on what Rust's safety actually costs in systems code.
-  Before that, with Vijay Nagarajan, I worked on memory consistency models for heterogeneous hardware.
+  fast userspace drivers. As a side-quest, we identified the microarchitectural overheads
+  of Rust's safety in systems code.
+  Before that, with Vijay Nagarajan, I worked on memory consistency models and coherence protocols for heterogeneous shared memory - both at a language level and a hardware level.
 options:
   - { short: "-e", long: "--email",    label: "sohambagchi@outlook.com",       href: "mailto:sohambagchi@outlook.com" }
   - { short: "-g", long: "--github",   label: "github.com/sohambagchi",        href: "https://github.com/sohambagchi" }
@@ -20,13 +21,13 @@ history:
   - date: Apr 2026
     text: Received an Honorable Mention for the Kahlert Impact Prize for service through GradSAC and EGSC.
   - date: "2026"
-    pub: bagchi2026beyond
-    text: accepted at PLOS ’26.
-  - date: "2026"
-    pub: bagchi2026consistency
-    text: accepted at ISMM ’26.
-  - date: "2026"
     pub: kapoor2026formalizing
     text: accepted at ASPLOS ’26.
+  - date: "2026"
+    pub: bagchi2026beyond
+    text: accepted at PLOS ’26. Presented + Poster at Prague, CZ!
+  - date: "2026"
+    pub: bagchi2026consistency
+    text: accepted at ISMM ’26. Presented at Boulder, CO!
   - date: "2026"
     text: "Started working with [Prof. Anton Burtsev](https://users.cs.utah.edu/~aburtsev/) on agentic AI for userspace drivers."
