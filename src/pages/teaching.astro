@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/site/PageHead.astro';
+import CRule from '../components/site/CRule.astro';
+import { Timeline } from '../components/sobar/editorial/Timeline.jsx';
+import { IndexRow } from '../components/sobar/editorial/IndexRow.jsx';
+import { teaching } from '../lib/data';
+import { teachingItems } from '../lib/nodes';
+import { pad2 } from '../lib/format';
+
+const items = teachingItems();
+---
+<Base section="teaching">
+  <PageHead title="Teaching" />
+  <section class="wrap">
+    <CRule label="Experience" />
+    <div class="tl"><Timeline items={items} /></div>
+  </section>
+  {teaching.tools.length > 0 && (
+    <section class="wrap sec">
+      <CRule label="Teaching tools" />
+      <div class="list">
+        {teaching.tools.map((t, i) => (
+          <IndexRow index={pad2(i + 1)} title={t.title} subtitle={t.summary} href={t.href} />
+        ))}
+      </div>
+    </section>
+  )}
+</Base>

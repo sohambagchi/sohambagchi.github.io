@@ -1,0 +1,16 @@
+# Site-wide settings. Used by every page, the header, the footer, RSS and <meta>.
+name: Soham Bagchi
+email: sohambagchi@outlook.com
+description: Soham Bagchi — PhD student in Computer Science at the University of Utah. Operating systems, memory models, and systems software.
+links:
+  github: https://github.com/sohambagchi
+  linkedin: https://www.linkedin.com/in/soham-bagchi
+  cv: /soham-bagchi-cv.pdf        # put the PDF in public/
+# <meta name="description"> per section page. Never rendered on the page itself.
+page_descriptions:
+  projects: Research and software projects.
+  blog: Writing on systems, research, and everything else.
+  creative: Things made outside of research.
+  publications: Papers by Soham Bagchi.
+  teaching: Teaching experience and teaching tools.
+  cv: Curriculum vitae of Soham Bagchi.

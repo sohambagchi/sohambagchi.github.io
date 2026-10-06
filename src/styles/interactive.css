@@ -1,0 +1,12 @@
+/* Two-state controls ship both icons; CSS picks the one that applies, so the swap needs no JS. */
+.theme-toggle .ic-sun,.bib__copy .ic-check{display:none}
+:root[data-theme="ink"] .theme-toggle .ic-moon{display:none}
+:root[data-theme="ink"] .theme-toggle .ic-sun{display:inline-flex}
+.bib__copy[data-copied] .ic-copy{display:none}
+.bib__copy[data-copied] .ic-check{display:inline-flex}
+/* Deep-linked record, in place of the prototype's JS highlight. */
+.pub:target .bib{border-color:var(--thread)}
+/* The copy tooltip hangs off the right edge of a phone when centred on its button, and an
+   invisible bubble still widens the page. Anchor it to the record's right edge instead. */
+.bib__copy .ln-tip__bubble{left:auto;right:0;transform:translate(0,4px)}
+.bib__copy .ln-tip:hover .ln-tip__bubble,.bib__copy .ln-tip:focus-within .ln-tip__bubble{transform:translate(0,0)}

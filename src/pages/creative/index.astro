@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/site/PageHead.astro';
+import { IndexRow } from '../../components/sobar/editorial/IndexRow.jsx';
+import { getCreative } from '../../lib/collections';
+import { monthShort } from '../../lib/format';
+
+const entries = await getCreative();
+---
+<Base section="creative">
+  <PageHead title="Creative" />
+  <section class="wrap">
+    {entries.length === 0 ? (
+      <p class="empty">No entries yet.</p>
+    ) : (
+      <div class="list">
+        {entries.map((entry) => (
+          <IndexRow
+            index={entry.data.medium}
+            title={entry.data.title}
+            subtitle={entry.data.summary}
+            year={monthShort(entry.data.date)}
+            href={`/creative/${entry.id}`}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</Base>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  label?: string;
+  as?: 'h2' | 'h3';
+  id?: string;
+  /** The decorative /* … *\/ rule. Reserved for essay-type pages. */
+  rule?: boolean;
+}
+const { label, as: Heading = 'h2', id, rule = false } = Astro.props;
+---
+<div class="csec" id={id}>
+  {rule && (
+    <div class="crule" aria-hidden="true">
+      <span>/*</span><i></i><span class="crule__end">*/</span>
+    </div>
+  )}
+  {label && <Heading class="csec__label">{label}</Heading>}
+</div>

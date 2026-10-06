@@ -1,0 +1,67 @@
+---
+// Man-page header: the current section on the left, "SEE ALSO" with the others on the right.
+import { navItems, type Section } from '../../lib/collections';
+import { iconHtml } from '../../lib/icons';
+
+interface Props { section: Section }
+const { section } = Astro.props;
+
+const nav = await navItems();
+// The CV sits outside the nav: it shows as CV(1) and keeps every other section in SEE ALSO.
+const current = section === 'cv' ? { key: 'cv' as Section, label: 'cv', count: 1, href: '/cv' } : nav.find((n) => n.key === section)!;
+const see = nav.filter((n) => n.key !== current.key);
+---
+<header class="hdr" id="site-header">
+  <div class="wrap hdr__in">
+    <a class="mhdr__home" href={current.href}>{current.label.toUpperCase()}({current.count})</a>
+    <nav class="nav" aria-label="Main">
+      <div class="mhdr__see">
+        <span class="mhdr__label">See also</span>
+        {/* No whitespace around the comma: these are inline, so a line break would show as a space. */}
+        {see.map((item, i) => (
+          <span><a href={item.href} class="mhdr__a">{item.label}({item.count})</a>{i < see.length - 1 && <span class="mhdr__sep">,</span>}</span>
+        ))}
+      </div>
+      <button
+        type="button"
+        id="theme-toggle"
+        class="ln-iconbtn ln-iconbtn--outline ln-iconbtn--sm theme-toggle"
+        aria-label="Dark theme"
+        title="Dark theme"
+      >
+        <Fragment set:html={iconHtml('moon', { size: 15, className: 'ic-moon' })} />
+        <Fragment set:html={iconHtml('sun', { size: 15, className: 'ic-sun' })} />
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Theme toggle and the header's scrolled border. The pre-paint theme script lives in <head>.
+  const KEY = 'sb-theme';
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+
+  const sync = () => {
+    const ink = root.getAttribute('data-theme') === 'ink';
+    const label = ink ? 'Light theme' : 'Dark theme';
+    toggle?.setAttribute('aria-label', label);
+    toggle?.setAttribute('title', label);
+  };
+  sync();
+
+  toggle?.addEventListener('click', () => {
+    const ink = root.getAttribute('data-theme') !== 'ink';
+    if (ink) root.setAttribute('data-theme', 'ink');
+    else root.removeAttribute('data-theme');
+    try {
+      localStorage.setItem(KEY, ink ? 'ink' : 'paper');
+    } catch {}
+    sync();
+  });
+
+  const header = document.getElementById('site-header');
+  const onScroll = () => header?.classList.toggle('hdr--scrolled', window.scrollY > 8);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

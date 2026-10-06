@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sohambagchi.github.io/sitemap-index.xml

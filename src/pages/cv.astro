@@ -1,0 +1,85 @@
+---
+import { createElement as h } from 'react';
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/site/PageHead.astro';
+import CRule from '../components/site/CRule.astro';
+import Authors from '../components/site/Authors.astro';
+import { Timeline } from '../components/sobar/editorial/Timeline.jsx';
+import { Tag } from '../components/sobar/display/Tag.jsx';
+import { Button } from '../components/sobar/core/Button.jsx';
+import { cv, site } from '../lib/data';
+import { teachingItems } from '../lib/nodes';
+import { getPublications } from '../lib/collections';
+
+const pubs = await getPublications();
+
+const experience = cv.experience.map((e) => ({
+  ...e,
+  body: e.points
+    ? h(
+        'span',
+        { className: 'pts' },
+        e.points.map((pt, i) => h('span', { key: i }, h('b', null, pt.with), ' ', h('span', { className: 'pts__y' }, pt.years), ' — ', pt.text)),
+      )
+    : e.body,
+}));
+
+const rowSections = [
+  { label: 'Service', rows: cv.service },
+  { label: 'Awards', rows: cv.awards },
+];
+---
+<Base section="cv">
+  <PageHead title="CV">
+    <div class="cvhead">
+      <div class="tags">{cv.interests.map((t) => <Tag>{t}</Tag>)}</div>
+      <Button variant="secondary" icon="download" href={site.links.cv}>CV (PDF)</Button>
+    </div>
+  </PageHead>
+
+  <section class="wrap">
+    <CRule label="Education" />
+    <div class="tl"><Timeline items={cv.education} /></div>
+  </section>
+
+  <section class="wrap sec">
+    <CRule label="Experience" />
+    <div class="tl"><Timeline items={experience} /></div>
+  </section>
+
+  <section class="wrap sec">
+    <CRule label="Publications" />
+    <div class="cites">
+      {pubs.map((p) => (
+        <a class="cite" href={`/publications#${p.id}`}>
+          <span class="cite__t">{p.data.title}</span>
+          <span class="cite__a"><Authors authors={p.data.authors} /></span>
+          <span class="cite__v">{[p.data.series, p.data.venue].filter(Boolean).join(' · ')}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <CRule label="Teaching" />
+    <div class="tl"><Timeline items={teachingItems()} /></div>
+  </section>
+
+  {rowSections.map((s) => (
+    <section class="wrap sec">
+      <CRule label={s.label} />
+      <ol class="rows">
+        {s.rows.map((r) => (
+          <li class="row">
+            <span class="row__d">{r.date}</span>
+            <div class="row__b">
+              <span class="row__h">{r.title}</span>
+              <span class="row__o">{r.org}</span>
+              {r.note && <span class="row__n">{r.note}</span>}
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  ))}
+</Base>

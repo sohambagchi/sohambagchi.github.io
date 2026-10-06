@@ -1,0 +1,69 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../components/site/PageHead.astro';
+import CRule from '../components/site/CRule.astro';
+import BibEntry from '../components/site/BibEntry.astro';
+import { getPublications } from '../lib/collections';
+
+const pubs = await getPublications();
+const years = [...new Set(pubs.map((p) => p.data.year))].sort((a, b) => b - a);
+---
+<Base section="publications">
+  <PageHead title="Publications" />
+  {years.map((year) => (
+    <section class="wrap sec">
+      <CRule label={String(year)} />
+      <div class="pubs">
+        {pubs.filter((p) => p.data.year === year).map((p) => <BibEntry pub={p} />)}
+      </div>
+    </section>
+  ))}
+</Base>
+
+<script>
+  // Copy the record as plain text, swap the icon for 1.6s, and raise a toast.
+  async function copy(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.append(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch {}
+      ta.remove();
+      return ok;
+    }
+  }
+
+  for (const wrap of document.querySelectorAll<HTMLElement>('[data-bib-copy]')) {
+    const button = wrap.querySelector('button');
+    const bubble = wrap.querySelector('.ln-tip__bubble');
+    let timer: number | undefined;
+
+    button?.addEventListener('click', async () => {
+      const ok = await copy(wrap.dataset.bibtex ?? '');
+      window.dispatchEvent(
+        new CustomEvent('site:toast', {
+          detail: ok
+            ? { tone: 'success', title: 'BibTeX copied', message: wrap.dataset.key ?? '' }
+            : { tone: 'warning', title: 'Could not copy', message: 'Select the text and copy it by hand.' },
+        }),
+      );
+      if (!ok) return;
+      wrap.setAttribute('data-copied', '');
+      if (bubble) bubble.textContent = 'Copied';
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        wrap.removeAttribute('data-copied');
+        if (bubble) bubble.textContent = 'Copy BibTeX';
+      }, 1600);
+    });
+  }
+</script>

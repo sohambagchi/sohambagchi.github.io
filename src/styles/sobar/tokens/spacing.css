@@ -1,0 +1,12 @@
+:root{
+--space-0:0;--space-1:2px;--space-2:4px;--space-3:8px;--space-4:12px;--space-5:16px;--space-6:24px;--space-7:32px;--space-8:48px;--space-9:64px;--space-10:96px;--space-11:128px;--space-12:192px;
+/* Layout */
+--gutter:clamp(20px,4vw,56px); /* @kind spacing */
+--section-gap:clamp(64px,10vw,160px); /* @kind spacing */
+--measure:64ch; /* @kind spacing */
+--measure-narrow:44ch; /* @kind spacing */
+--page-max:1360px;
+--margin-note:240px;
+--control-sm:32px;--control-md:40px;--control-lg:52px;
+--hairline:1px;--rule:2px;
+}

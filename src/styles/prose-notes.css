@@ -1,0 +1,20 @@
+/* Article with a note rail to its right. The rail is taken out of flow on purpose: as a grid item
+   spanning the article's rows it would grow those rows when a note is pushed down, which moves the
+   reference the note is chasing. Out of flow, an offset can never feed back into the text. */
+.ln-prose.post{
+  --rail-w:240px;
+  --rail-gap:clamp(24px,4vw,56px);
+  position:relative;
+  max-width:calc(var(--measure) + var(--rail-w) + var(--rail-gap));
+  padding-right:calc(var(--rail-w) + var(--rail-gap))
+}
+.post>.notes{position:absolute;top:0;right:0;width:var(--rail-w);display:flex;flex-direction:column;gap:18px}
+/* margin-top must not animate: the alignment script measures these positions, and a transition in
+   flight makes it read a half-moved note and compute the next offset from the wrong place. */
+.post>.notes .ln-note{scroll-margin-top:110px;transition:color var(--dur-base) var(--ease-drift),border-color var(--dur-base) var(--ease-drift)}
+/* Below the rail breakpoint the notes are an ordinary list after the article. */
+@media (max-width:1100px){
+.ln-prose.post{max-width:var(--measure);padding-right:0}
+.post>.notes{position:static;width:auto;margin-top:clamp(32px,4vw,48px)}
+.post>.notes .ln-note{margin-top:0 !important}
+}

@@ -1,0 +1,52 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryHead from '../../components/site/EntryHead.astro';
+import CRule from '../../components/site/CRule.astro';
+import { IndexRow } from '../../components/sobar/editorial/IndexRow.jsx';
+import { Tag } from '../../components/sobar/display/Tag.jsx';
+import { getProjects, type Project } from '../../lib/collections';
+import { pubRowIndex } from '../../lib/nodes';
+import { years } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props { project: Project }
+const { project } = Astro.props;
+const p = project.data;
+const { Content } = await render(project);
+const hasBody = project.body != null && project.body.trim().length > 0;
+
+const related = (await Promise.all(p.publications.map((ref) => getEntry(ref)))).filter((x) => x != null);
+---
+<Base section="projects" title={p.title} description={p.summary}>
+  <EntryHead title={p.title}>
+    <dl class="meta">
+      <div><dt>Kind</dt><dd>{p.kind}</dd></div>
+      <div><dt>Years</dt><dd>{years(p.start, p.end)}</dd></div>
+      {p.stack.length > 0 && (
+        <div><dt>Stack</dt><dd class="tags">{p.stack.map((t) => <Tag>{t}</Tag>)}</dd></div>
+      )}
+    </dl>
+  </EntryHead>
+
+  <section class="wrap">
+    <div class="ln-prose">
+      {hasBody ? <Content /> : <p>{p.summary}</p>}
+    </div>
+  </section>
+
+  {related.length > 0 && (
+    <section class="wrap sec">
+      <CRule label="Related" />
+      <div class="list">
+        {related.map((pub) => (
+          <IndexRow className="relrow" index={pubRowIndex(pub)} title={pub.data.title} href={`/publications#${pub.id}`} />
+        ))}
+      </div>
+    </section>
+  )}
+</Base>

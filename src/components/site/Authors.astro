@@ -1,0 +1,9 @@
+---
+import { site } from '../../lib/data';
+
+interface Props { authors: string[] }
+const { authors } = Astro.props;
+---
+{authors.map((a, i) => (
+  <Fragment>{i > 0 ? ', ' : ''}{a === site.name ? <b class="me">{a}</b> : a}</Fragment>
+))}

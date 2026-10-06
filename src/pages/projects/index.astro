@@ -1,0 +1,29 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/site/PageHead.astro';
+import { IndexRow } from '../../components/sobar/editorial/IndexRow.jsx';
+import { getProjects } from '../../lib/collections';
+import { pad2, years } from '../../lib/format';
+
+const projects = await getProjects();
+---
+<Base section="projects">
+  <PageHead title="Projects" />
+  <section class="wrap">
+    {projects.length === 0 ? (
+      <p class="empty">No projects yet.</p>
+    ) : (
+      <div class="list">
+        {projects.map((p, i) => (
+          <IndexRow
+            index={pad2(i + 1)}
+            title={p.data.title}
+            subtitle={p.data.summary}
+            year={years(p.data.start, p.data.end)}
+            href={`/projects/${p.id}`}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</Base>

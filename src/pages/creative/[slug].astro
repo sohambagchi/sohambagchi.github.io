@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryHead from '../../components/site/EntryHead.astro';
+import { Link } from '../../components/sobar/core/Link.jsx';
+import { getCreative, type Creative } from '../../lib/collections';
+import { dateLong } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const entries = await getCreative();
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+interface Props { entry: Creative }
+const { entry } = Astro.props;
+const d = entry.data;
+const { Content } = await render(entry);
+const hasBody = entry.body != null && entry.body.trim().length > 0;
+---
+<Base section="creative" title={d.title} description={d.summary}>
+  <EntryHead title={d.title}>
+    <dl class="meta">
+      <div><dt>Medium</dt><dd>{d.medium}</dd></div>
+      <div><dt>Date</dt><dd>{dateLong(d.date)}</dd></div>
+    </dl>
+  </EntryHead>
+
+  {d.cover && (
+    <section class="wrap">
+      <figure class="plate">
+        <Image src={d.cover} alt={d.cover_caption ?? d.title} widths={[640, 1024, 1360]} sizes="(min-width: 1400px) 1360px, 100vw" />
+        {d.cover_caption && <figcaption class="plate__cap">{d.cover_caption}</figcaption>}
+      </figure>
+    </section>
+  )}
+
+  {d.links.length > 0 && (
+    <section class="wrap">
+      <div class="pub__above">{d.links.map((l) => <Link href={l.href} external>{l.label}</Link>)}</div>
+    </section>
+  )}
+
+  {hasBody && (
+    <section class="wrap">
+      <div class="ln-prose"><Content /></div>
+    </section>
+  )}
+</Base>
+
+<style is:global>
+  /* Museum plate: full-width image, square corners, mono caption underneath. */
+  .plate { margin: clamp(32px, 4vw, 56px) 0 0; }
+  .plate img { display: block; width: 100%; height: auto; background: var(--bg-sunken); }
+  .plate__cap { margin-top: 12px; font: var(--type-meta); letter-spacing: var(--tracking-mono); color: var(--fg-3); }
+</style>

@@ -1,0 +1,5 @@
+/* Sobar webfonts — served from Google Fonts.
+   Display: Bricolage Grotesque (modern, bold, warm)
+   Serif:   Newsreader (reading + italic voice; the historical register)
+   Mono:    Fira Code (dates, indices, annotations) */
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Fira+Code:wght@300..700&display=swap");

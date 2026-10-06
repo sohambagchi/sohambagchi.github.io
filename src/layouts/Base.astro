@@ -1,0 +1,61 @@
+---
+// Token order matters: fonts → colors → typography → spacing → radius → elevation → motion → base,
+// then Sobar's components, then the site's own styles.
+import '../styles/sobar/tokens/fonts.css';
+import '../styles/sobar/tokens/colors.css';
+import '../styles/sobar/tokens/typography.css';
+import '../styles/sobar/tokens/spacing.css';
+import '../styles/sobar/tokens/radius.css';
+import '../styles/sobar/tokens/elevation.css';
+import '../styles/sobar/tokens/motion.css';
+import '../styles/sobar/tokens/base.css';
+import '../styles/sobar/components.css';
+import '../styles/site.css';
+import '../styles/interactive.css';
+
+import Head from '../components/site/Head.astro';
+import Header from '../components/site/Header.astro';
+import Footer from '../components/site/Footer.astro';
+import ToastRegion from '../components/site/ToastRegion.astro';
+import { site } from '../lib/data';
+import { SECTION_TITLES, type Section } from '../lib/collections';
+
+interface Props {
+  section: Section;
+  /** Overrides the section name in <title> — used on detail pages. */
+  title?: string;
+  description?: string;
+  /** Overrides data-screen-label, which otherwise names the section. */
+  screenLabel?: string;
+}
+const { section, title, description, screenLabel } = Astro.props;
+
+const sectionTitle = section === 'home' ? undefined : SECTION_TITLES[section];
+const label = screenLabel ?? sectionTitle ?? 'Home';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head
+      title={title ?? sectionTitle}
+      description={description ?? site.page_descriptions[section] ?? site.description}
+    />
+    <script is:inline>
+      // Before first paint, so the theme never flashes.
+      try {
+        if (localStorage.getItem('sb-theme') === 'ink') document.documentElement.setAttribute('data-theme', 'ink');
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div class="site">
+      <a class="ln-sr" href="#main">Skip to content</a>
+      <Header section={section} />
+      <main id="main" class="screen" data-screen-label={label} tabindex="-1">
+        <slot />
+      </main>
+      <Footer />
+      <ToastRegion />
+    </div>
+  </body>
+</html>

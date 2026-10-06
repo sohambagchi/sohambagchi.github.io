@@ -1,0 +1,33 @@
+{
+  "name": "soham-bagchi-site",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4",
+    "@astrojs/rss": "^4",
+    "@astrojs/sitemap": "^3",
+    "astro": "^5",
+    "js-yaml": "^4",
+    "marked": "^14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remark-smartypants": "^3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9",
+    "@types/js-yaml": "^4",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20.3.0"
+  }
+}

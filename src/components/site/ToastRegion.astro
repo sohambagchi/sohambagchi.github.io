@@ -1,0 +1,38 @@
+---
+// One toast region per page. The template is rendered at build time from Sobar's Toast,
+// then cloned by the copy button's script — so no React reaches the browser.
+import { Toast } from '../sobar/feedback/Toast.jsx';
+---
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+<template id="toast-template">
+  <Toast tone="success" title=" " onClose={() => {}}>{' '}</Toast>
+</template>
+
+<script>
+  const region = document.getElementById('toasts');
+  const template = document.getElementById('toast-template') as HTMLTemplateElement | null;
+
+  function toast(tone: 'success' | 'warning', title: string, message: string) {
+    if (!region || !template) return;
+    const node = template.content.firstElementChild?.cloneNode(true) as HTMLElement | undefined;
+    if (!node) return;
+    node.classList.remove('ln-toast--success', 'ln-toast--warning');
+    node.classList.add('ln-toast--' + tone);
+    const t = node.querySelector('.ln-toast__title');
+    const m = node.querySelector('.ln-toast__msg');
+    if (t) t.textContent = title;
+    if (m) m.textContent = message;
+    const dismiss = () => {
+      clearTimeout(timer);
+      node.remove();
+    };
+    node.querySelector('.ln-iconbtn')?.addEventListener('click', dismiss);
+    region.append(node);
+    const timer = setTimeout(dismiss, 3200);
+  }
+
+  window.addEventListener('site:toast', (e) => {
+    const d = (e as CustomEvent<{ tone: 'success' | 'warning'; title: string; message: string }>).detail;
+    toast(d.tone, d.title, d.message);
+  });
+</script>

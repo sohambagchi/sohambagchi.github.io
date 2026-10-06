@@ -1,0 +1,21 @@
+# build
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# local
+.DS_Store
+*.log
+npm-debug.log*
+.env
+.env.*
+!.env.example
+
+# the design handoff archive, kept locally
+personal_website.zip
+
+# nix / direnv
+.direnv/
+result

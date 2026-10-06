@@ -1,0 +1,76 @@
+---
+// Home, set like a man page: NAME / DESCRIPTION / OPTIONS / HISTORY.
+import Base from '../layouts/Base.astro';
+import Portrait from '../components/site/Portrait.astro';
+import { Link } from '../components/sobar/core/Link.jsx';
+import { home, site } from '../lib/data';
+import { inlineMd } from '../lib/md';
+import { getPublications } from '../lib/collections';
+
+const byKey = new Map((await getPublications()).map((p) => [p.id, p]));
+
+const history = home.history.map((entry) => {
+  if (!entry.pub) return { ...entry, paper: null };
+  const paper = byKey.get(entry.pub);
+  if (!paper) throw new Error(`home.yaml: history entry cites "${entry.pub}", which is not a key in publications.bib`);
+  return { ...entry, paper };
+});
+
+const external = (href: string) => /^https?:\/\//i.test(href);
+---
+<Base section="home">
+  <div class="wrap man">
+    <section class="man__sec man__sec--top">
+      <h2 class="man__h">Name</h2>
+      <div class="man__b">
+        <div class="man__desc">
+          <div>
+            <h1 class="phead__t man__t">{site.name}<i>.</i></h1>
+            <p class="man__nd">— <Fragment set:html={inlineMd(home.tagline)} /></p>
+          </div>
+          <Portrait />
+        </div>
+      </div>
+    </section>
+
+    <section class="man__sec">
+      <h2 class="man__h">Description</h2>
+      <div class="man__b">
+        <div class="ln-prose"><p set:html={inlineMd(home.description)} /></div>
+      </div>
+    </section>
+
+    <section class="man__sec">
+      <h2 class="man__h">Options</h2>
+      <div class="man__b">
+        <dl class="man__dl">
+          {home.options.map((o) => (
+            <div>
+              <dt><b>{o.short}</b>, <b>{o.long}</b></dt>
+              <dd><Link href={o.href} external={external(o.href)}>{o.label}</Link></dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+
+    <section class="man__sec">
+      <h2 class="man__h">History</h2>
+      <div class="man__b">
+        <dl class="man__dl man__dl--hist">
+          {history.map((item) => (
+            <div>
+              <dt>{item.date}</dt>
+              <dd>
+                {item.paper && (
+                  <Fragment><Link href={`/publications#${item.pub}`}>{item.paper.data.title}</Link>{' '}</Fragment>
+                )}
+                <Fragment set:html={inlineMd(item.text)} />
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  </div>
+</Base>

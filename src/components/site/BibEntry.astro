@@ -1,0 +1,53 @@
+---
+// The record is rebuilt from the parsed fields, so site-only bib fields never reach the reader.
+import { Link } from '../sobar/core/Link.jsx';
+import Authors from './Authors.astro';
+import { bibFields, bibText, PAD } from '../../lib/bibtex';
+import { iconHtml } from '../../lib/icons';
+import type { Publication } from '../../lib/collections';
+
+interface Props { pub: Publication }
+const { pub } = Astro.props;
+const p = pub.data;
+const key = pub.id;
+const fields = bibFields(p);
+const above = p.highlight != null || p.links.length > 0;
+---
+<article class="pub" id={key} aria-label={p.title}>
+  {above && (
+    <div class="pub__above">
+      {p.highlight && <span class="pub__note">{p.highlight}</span>}
+      {p.links.map((l) => <Link href={l.href} external>{l.label}</Link>)}
+    </div>
+  )}
+  <div class="bib">
+    <div class="bib__copy" data-bib-copy data-key={key} data-bibtex={bibText(key, p)}>
+      <span class="ln-tip">
+        <button type="button" class="ln-iconbtn ln-iconbtn--sm" aria-label="Copy BibTeX" title="Copy BibTeX">
+          <Fragment set:html={iconHtml('copy', { size: 15, className: 'ic-copy' })} />
+          <Fragment set:html={iconHtml('check', { size: 15, className: 'ic-check' })} />
+        </button>
+        <span class="ln-tip__bubble" role="tooltip">Copy BibTeX</span>
+      </span>
+    </div>
+    <div class="bib__code">
+      <div class="bib__line">
+        <span class="bib__type">@{p.entryType}</span><span class="bib__p">{'{'}</span>{key}<span class="bib__p">,</span>
+      </div>
+      {/* The record is mono but not <pre>, so every newline inside a line of it would show up
+          as a space. Braces hug their value: the line breaks below sit inside JS expressions. */}
+      {fields.map((f, i) => (
+        <div class="bib__f"><span class="bib__k">{'  ' + f.key.padEnd(PAD) + ' = '}</span><span class="bib__v"><span class="bib__p">{'{'}</span>{
+          f.role === 'venue'
+            ? <span class="bib__venue">{f.value}</span>
+            : f.role === 'doi'
+              ? <a class="ln-link" href={`https://doi.org/${f.value}`} target="_blank" rel="noopener noreferrer">{f.value}</a>
+              : f.role === 'authors'
+                ? <Authors authors={p.authors} />
+                : f.value
+        }<span class="bib__p">{'}'}{i < fields.length - 1 ? ',' : ''}</span></span></div>
+      ))}
+      <div class="bib__line"><span class="bib__p">{'}'}</span></div>
+    </div>
+  </div>
+</article>

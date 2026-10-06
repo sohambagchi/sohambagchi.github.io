@@ -1,0 +1,28 @@
+---
+import { site } from '../../lib/data';
+
+interface Props {
+  /** Section or entry title. Omitted on the homepage. */
+  title?: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} — ${site.name}` : site.name;
+// build.format is 'file', so pathname carries the .html the reader never sees.
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+const canonical = new URL(path || '/', Astro.site).href;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="alternate" type="application/rss+xml" title={site.name} href="/rss.xml" />
+<link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta name="twitter:card" content="summary" />
+<meta name="generator" content={Astro.generator} />

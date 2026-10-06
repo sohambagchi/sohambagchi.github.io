@@ -1,0 +1,13 @@
+---
+import { site } from '../../lib/data';
+import { buildDate, updatedDate } from '../../lib/buildinfo';
+import { monthYear } from '../../lib/format';
+---
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__colophon">
+      <span>© {buildDate.getUTCFullYear()} {site.name}</span>
+      <span>Updated {monthYear(updatedDate)}</span>
+    </div>
+  </div>
+</footer>

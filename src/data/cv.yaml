@@ -1,0 +1,44 @@
+# /cv. Publications come from publications.bib and Teaching from teaching.yaml.
+interests:
+  - Operating systems & drivers
+  - Memory consistency models
+  - Computer architecture
+  - LLMs & agentic systems
+education:
+  - year: "2023"
+    title: PhD in Computer Science
+    place: University of Utah · Salt Lake City, Utah · 2023–present
+    current: true
+  - year: "2019"
+    title: B.Sc. in Computer Science
+    place: Ashoka University · Sonipat, Haryana · 2019–2023
+experience:
+  - year: "2023"
+    title: PhD Student
+    place: University of Utah · Aug 2023–present
+    current: true
+    points:
+      - { with: Prof. Anton Burtsev,   years: 2026–present, text: agentic AI for developing isolated and performant userspace drivers. }
+      - { with: Prof. Vijay Nagarajan, years: 2023–2026,    text: compound memory consistency models for heterogeneous hardware and software. }
+  - year: "2022"
+    title: Cluster Administrator — HPC
+    place: Ashoka University · Apr 2022–Dec 2022
+    body: Part of the team that serviced and maintained the university's high-performance computing cluster.
+  - year: "2021"
+    title: Research Assistant
+    place: Ashoka University · Jun 2021–Aug 2022
+    body: With Prof. Manu Awasthi, analyzed file-metadata lookups to design optimizations for non-volatile memory.
+service:
+  - { date: 2024–25, title: "President, GradSAC",                  org: Kahlert School of Computing }
+  - { date: 2024–25, title: "Secretary, EGSC",                     org: Price College of Engineering }
+  - { date: 2023–24, title: "Vice-President, GradSAC",             org: Kahlert School of Computing }
+  - { date: 2021–22, title: "President, Computer Science Society", org: Ashoka University }
+  - { date: 2021–22, title: "Member, Women in Computing Society",  org: Ashoka University }
+  - { date: 2020–22, title: "Marketing Team Head, RedBrick Hacks", org: Ashoka University }
+awards:
+  - { date: Apr 2026, title: "Kahlert Impact Prize, Honorable Mention", org: Kahlert School of Computing }
+  - { date: Jul 2023, title: Teaching Assistant Excellence Award, org: "CS Department, Ashoka University", note: "Operating Systems, Spring 2023" }
+  - { date: Jul 2023, title: Best Capstone Project Award,         org: "CS Department, Ashoka University", note: "“HashPath: Analysis of Metadata Caches in the Presence of Hybrid Memory Hierarchies”" }
+  - { date: Jul 2022, title: Research Excellence Award,           org: "CS Department, Ashoka University" }
+  - { date: Jul 2021, title: Teaching Assistant Excellence Award, org: "CS Department, Ashoka University", note: "Introduction to Computer Programming, Spring 2020" }
+  - { date: Semesters 2–6, title: "Dean's List", org: Ashoka University }

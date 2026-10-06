@@ -1,0 +1,104 @@
+/* Sobar color — warm paper, deep ink, and four historical pigments.
+   Base ramps are raw values; components should use the semantic aliases below. */
+:root{
+/* Paper → Ink (warm neutral ramp) */
+--paper-50:oklch(0.988 0.006 82);
+--paper-100:oklch(0.968 0.013 82);
+--paper-200:oklch(0.935 0.019 80);
+--paper-300:oklch(0.885 0.024 78);
+--stone-400:oklch(0.735 0.024 72);
+--stone-500:oklch(0.585 0.024 66);
+--umber-600:oklch(0.465 0.024 60);
+--umber-700:oklch(0.355 0.021 56);
+--ink-800:oklch(0.265 0.017 52);
+--ink-900:oklch(0.195 0.013 50);
+--ink-950:oklch(0.155 0.010 50);
+/* Cinnabar — the signature. Bold red-orange of seals and rubrics. */
+--cinnabar-100:oklch(0.950 0.030 42);
+--cinnabar-200:oklch(0.885 0.068 40);
+--cinnabar-300:oklch(0.790 0.120 38);
+--cinnabar-400:oklch(0.690 0.170 36);
+--cinnabar-500:oklch(0.610 0.200 34);
+--cinnabar-600:oklch(0.540 0.190 32);
+--cinnabar-700:oklch(0.450 0.160 30);
+--cinnabar-900:oklch(0.300 0.095 30);
+/* Ochre — warm gold of earth pigment */
+--ochre-100:oklch(0.960 0.035 88);
+--ochre-200:oklch(0.910 0.075 86);
+--ochre-400:oklch(0.815 0.130 80);
+--ochre-500:oklch(0.735 0.140 74);
+--ochre-700:oklch(0.520 0.105 68);
+/* Verdigris — weathered copper */
+--verdigris-100:oklch(0.950 0.022 178);
+--verdigris-200:oklch(0.895 0.045 178);
+--verdigris-500:oklch(0.590 0.085 182);
+--verdigris-700:oklch(0.425 0.070 186);
+/* Lapis — ground ultramarine */
+--lapis-100:oklch(0.950 0.022 262);
+--lapis-200:oklch(0.880 0.050 262);
+--lapis-500:oklch(0.520 0.130 264);
+--lapis-700:oklch(0.390 0.115 266);
+
+/* ——— Semantic aliases ——— */
+--bg-page:var(--paper-100);
+--bg-surface:var(--paper-50);
+--bg-sunken:var(--paper-200);
+--bg-inverse:var(--ink-900);
+--bg-accent:var(--cinnabar-500);
+--bg-accent-soft:var(--cinnabar-100);
+--fg-1:var(--ink-900);
+--fg-2:var(--umber-700);
+--fg-3:var(--stone-500);
+--fg-inverse:var(--paper-50);
+--fg-accent:var(--cinnabar-600);
+--fg-on-accent:var(--paper-50);
+--text-body:var(--fg-1);
+--text-muted:var(--fg-2);
+--text-subtle:var(--fg-3);
+--text-link:var(--fg-1);
+--text-link-hover:var(--cinnabar-600);
+--surface-card:var(--bg-surface);
+--surface-raised:var(--paper-50);
+--surface-overlay:oklch(0.195 0.013 50 / 0.42);
+--line-1:oklch(0.195 0.013 50 / 0.12);
+--line-2:oklch(0.195 0.013 50 / 0.24);
+--line-strong:var(--ink-900);
+--accent:var(--cinnabar-600);
+--accent-hover:var(--cinnabar-700);
+--accent-press:var(--cinnabar-900);
+--thread:var(--cinnabar-500);
+--focus-ring:var(--cinnabar-500);
+--selection:var(--ochre-200);
+--success:var(--verdigris-700);--success-soft:var(--verdigris-100);
+--warning:var(--ochre-700);--warning-soft:var(--ochre-100);
+--danger:var(--cinnabar-700);--danger-soft:var(--cinnabar-100);
+--info:var(--lapis-700);--info-soft:var(--lapis-100);
+}
+/* Ink theme — the same system, at night. Apply data-theme="ink" on any element. */
+[data-theme="ink"]{
+--bg-page:var(--ink-950);
+--bg-surface:var(--ink-900);
+--bg-sunken:oklch(0.125 0.008 50);
+--bg-inverse:var(--paper-100);
+--bg-accent:var(--cinnabar-500);
+--bg-accent-soft:oklch(0.30 0.07 32);
+--fg-1:var(--paper-100);
+--fg-2:var(--paper-300);
+--fg-3:var(--stone-400);
+--fg-inverse:var(--ink-900);
+--fg-accent:var(--cinnabar-400);
+--text-body:var(--fg-1);--text-muted:var(--fg-2);--text-subtle:var(--fg-3);
+--text-link:var(--fg-1);--text-link-hover:var(--cinnabar-400);
+--surface-card:var(--ink-900);--surface-raised:var(--ink-800);
+--surface-overlay:oklch(0.10 0.008 50 / 0.6);
+--line-1:oklch(0.968 0.013 82 / 0.12);
+--line-2:oklch(0.968 0.013 82 / 0.24);
+--line-strong:var(--paper-100);
+--accent:var(--cinnabar-500);--accent-hover:var(--cinnabar-400);--accent-press:var(--cinnabar-600);
+--thread:var(--cinnabar-400);--focus-ring:var(--cinnabar-400);
+--selection:oklch(0.45 0.09 70);
+--success:var(--verdigris-200);--success-soft:oklch(0.28 0.04 182);
+--warning:var(--ochre-400);--warning-soft:oklch(0.30 0.05 74);
+--danger:var(--cinnabar-300);--danger-soft:oklch(0.30 0.07 32);
+--info:var(--lapis-200);--info-soft:oklch(0.28 0.05 264);
+}

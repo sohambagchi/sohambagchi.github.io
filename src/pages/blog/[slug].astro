@@ -1,0 +1,123 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryHead from '../../components/site/EntryHead.astro';
+import CRule from '../../components/site/CRule.astro';
+import { IndexRow } from '../../components/sobar/editorial/IndexRow.jsx';
+import { Tag } from '../../components/sobar/display/Tag.jsx';
+import { getPosts, type Post } from '../../lib/collections';
+import { pubRowIndex } from '../../lib/nodes';
+import { dateLong, readingMinutes, years } from '../../lib/format';
+import '../../styles/prose-notes.css';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props { post: Post }
+const { post } = Astro.props;
+const d = post.data;
+const { Content } = await render(post);
+
+const projects = (await Promise.all(d.projects.map((ref) => getEntry(ref)))).filter((x) => x != null);
+const publications = (await Promise.all(d.publications.map((ref) => getEntry(ref)))).filter((x) => x != null);
+const hasRelated = projects.length + publications.length > 0;
+---
+<Base section="blog" title={d.title} description={d.summary}>
+  <EntryHead title={d.title}>
+    <dl class="meta">
+      <div><dt>Date</dt><dd>{dateLong(d.date)}</dd></div>
+      {d.updated && <div><dt>Updated</dt><dd>{dateLong(d.updated)}</dd></div>}
+      <div><dt>Reading time</dt><dd>{readingMinutes(post.body ?? '')} min</dd></div>
+      {d.tags.length > 0 && <div><dt>Tags</dt><dd class="tags">{d.tags.map((t) => <Tag>{t}</Tag>)}</dd></div>}
+    </dl>
+  </EntryHead>
+
+  <section class="wrap">
+    <div class="ln-prose post" id="post">
+      <Content />
+    </div>
+  </section>
+
+  {hasRelated && (
+    <section class="wrap sec">
+      <CRule label="Related" />
+      <div class="list">
+        {projects.map((project) => (
+          <IndexRow
+            className="relrow"
+            index={project.data.kind}
+            title={project.data.title}
+            year={years(project.data.start, project.data.end)}
+            href={`/projects/${project.id}`}
+          />
+        ))}
+        {publications.map((pub) => (
+          <IndexRow className="relrow" index={pubRowIndex(pub)} title={pub.data.title} href={`/publications#${pub.id}`} />
+        ))}
+      </div>
+    </section>
+  )}
+</Base>
+
+<script>
+  // Margin notes: line each note up with its reference while the rail is showing, and light up
+  // the pair on hover. The rail is positioned out of flow (see prose-notes.css), so an offset
+  // never moves the text the note is measured against.
+  const post = document.getElementById('post');
+  const rail = post?.querySelector<HTMLElement>('.notes');
+  const notes = post ? [...post.querySelectorAll<HTMLElement>('.notes .ln-note')] : [];
+
+  if (post && rail && notes.length > 0) {
+    const wide = window.matchMedia('(min-width: 1101px)');
+    const refOf = (note: HTMLElement) => post.querySelector<HTMLElement>(`[data-note-ref="${note.dataset.note}"]`);
+
+    // Clearing every offset before measuring makes this idempotent: re-running it on any reflow
+    // settles on the same answer rather than drifting.
+    const align = () => {
+      post.style.minHeight = '';
+      for (const note of notes) note.style.marginTop = '';
+      if (!wide.matches) return;
+      for (const note of notes) {
+        const ref = refOf(note);
+        if (!ref) continue;
+        const delta = ref.getBoundingClientRect().top - note.getBoundingClientRect().top;
+        if (delta > 0) note.style.marginTop = `${Math.round(delta)}px`;
+      }
+      // Keep the article tall enough that a trailing note cannot overlap what follows it.
+      const overhang = rail.getBoundingClientRect().bottom - post.getBoundingClientRect().top;
+      post.style.minHeight = `${Math.ceil(overhang)}px`;
+    };
+
+    for (const note of notes) {
+      const ref = refOf(note);
+      if (!ref) continue;
+      const on = (active: boolean) => {
+        note.classList.toggle('ln-note--active', active);
+        ref.classList.toggle('ln-noteref--active', active);
+      };
+      for (const el of [note, ref]) {
+        el.addEventListener('mouseenter', () => on(true));
+        el.addEventListener('mouseleave', () => on(false));
+      }
+      ref.addEventListener('focus', () => on(true));
+      ref.addEventListener('blur', () => on(false));
+    }
+
+    let frame = 0;
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(align);
+    };
+
+    align();
+    // Watch the article's blocks: a web font swapping in after first layout moves the later
+    // references, and neither load nor resize reliably fires for that.
+    const observer = new ResizeObserver(schedule);
+    for (const block of post.children) if (block !== rail) observer.observe(block);
+    window.addEventListener('resize', schedule);
+    wide.addEventListener('change', schedule);
+    document.fonts?.ready.then(schedule);
+  }
+</script>

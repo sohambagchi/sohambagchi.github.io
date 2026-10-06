@@ -1,0 +1,14 @@
+---
+import { home, site } from '../../lib/data';
+---
+<div class="portrait">
+  <img
+    src={home.portrait}
+    alt={site.name}
+    width="400"
+    height="500"
+    loading="eager"
+    onerror="var p=this.closest('.portrait');this.remove();p.querySelector('.portrait__mono').hidden=false"
+  />
+  <span class="portrait__mono" role="img" aria-label={site.name} hidden>SB</span>
+</div>

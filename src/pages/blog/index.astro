@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHead from '../../components/site/PageHead.astro';
+import { IndexRow } from '../../components/sobar/editorial/IndexRow.jsx';
+import { getPosts } from '../../lib/collections';
+import { monthShort, pad2, readingMinutes } from '../../lib/format';
+
+const posts = await getPosts();
+// Numbered from the oldest post up, so a number never changes once published.
+const total = posts.length;
+---
+<Base section="blog">
+  <PageHead title="Blog" />
+  <section class="wrap">
+    {total === 0 ? (
+      <p class="empty">No posts yet.</p>
+    ) : (
+      <div class="list">
+        {posts.map((post, i) => (
+          <IndexRow
+            index={`№ ${pad2(total - i)}`}
+            title={post.data.title}
+            subtitle={post.data.summary}
+            year={`${monthShort(post.data.date)} · ${readingMinutes(post.body ?? '')} min`}
+            href={`/blog/${post.id}`}
+          />
+        ))}
+      </div>
+    )}
+  </section>
+</Base>

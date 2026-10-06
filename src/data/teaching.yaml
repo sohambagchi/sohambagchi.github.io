@@ -1,0 +1,41 @@
+# Shown on /teaching and in the Teaching section of /cv. Newest first.
+courses:
+  - term: Spring
+    year: 2026
+    role: Mini-Practicum Instructor
+    course: Undergraduate Computer Organization
+    place: University of Utah
+    instructor: Prof. Rajeev Balasubramonian
+    lecture_label: Lectures
+    lectures: The Cache and Memory Hierarchy (two lectures)
+    extra: Part of Prof. Erin Parker's Teaching CS in Higher Education.
+  - term: Spring
+    year: 2025
+    role: Graduate TA
+    course: Operating Systems
+    place: University of Utah
+    instructor: Prof. Anton Burtsev
+    lectures: Linking and Loading
+  - term: Fall
+    year: 2024
+    role: Graduate TA
+    course: Computer Architecture
+    place: University of Utah
+    instructor: Prof. Vijay Nagarajan
+    lectures: Instruction Set Architectures
+  - term: Spring
+    year: 2023
+    role: Undergraduate TA
+    course: Operating Systems
+    place: Ashoka University
+    instructor: Prof. Manu Awasthi
+    award: Teaching Assistant Excellence Award
+  - term: Spring
+    year: 2020
+    role: Undergraduate TA
+    course: Introduction to Computer Programming
+    place: Ashoka University
+    instructor: Prof. Goutam Paul
+    award: Teaching Assistant Excellence Award
+# Section is hidden while empty.  - { title: ..., summary: ..., href: ... }
+tools: []
