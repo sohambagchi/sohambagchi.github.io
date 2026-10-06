@@ -1,6 +1,6 @@
 # Homepage, laid out like a man page: NAME / DESCRIPTION / OPTIONS / HISTORY.
 # Text fields are inline Markdown. Links starting with http(s) get the external ↗ treatment.
-portrait: /portrait.jpg           # public/portrait.jpg; falls back to an "SB" monogram if missing
+portrait: /portrait.jpg # public/portrait.jpg; falls back to an "SB" monogram if missing
 tagline: "PhD student in Computer Science, [Kahlert School of Computing, University of Utah](https://www.cs.utah.edu/)"
 description: >-
   I'm a PhD student at the University of Utah, working with
@@ -9,10 +9,30 @@ description: >-
   of Rust's safety in systems code.
   Before that, with Vijay Nagarajan, I worked on memory consistency models and coherence protocols for heterogeneous shared memory - both at a language level and a hardware level.
 options:
-  - { short: "-e", long: "--email",    label: "sohambagchi@outlook.com",       href: "mailto:sohambagchi@outlook.com" }
-  - { short: "-g", long: "--github",   label: "github.com/sohambagchi",        href: "https://github.com/sohambagchi" }
-  - { short: "-l", long: "--linkedin", label: "linkedin.com/in/soham-bagchi",  href: "https://www.linkedin.com/in/soham-bagchi" }
-  - { short: "-c", long: "--cv",       label: "Curriculum vitae (PDF)",        href: "/soham-bagchi-cv.pdf" }
+  - {
+      short: "-e",
+      long: "--email",
+      label: "sohambagchi@outlook.com",
+      href: "mailto:sohambagchi@outlook.com",
+    }
+  - {
+      short: "-g",
+      long: "--github",
+      label: "github.com/sohambagchi",
+      href: "https://github.com/sohambagchi",
+    }
+  - {
+      short: "-l",
+      long: "--linkedin",
+      label: "linkedin.com/in/soham-bagchi",
+      href: "https://www.linkedin.com/in/soham-bagchi",
+    }
+  - {
+      short: "-c",
+      long: "--cv",
+      label: "Curriculum vitae (PDF)",
+      href: "/soham-bagchi-cv.pdf",
+    }
 # The page sorts this newest first by "date" ("Apr 2026" before a bare "2026" in the same year),
 # so entries that share a date show up in the order they are written here — keep those newest first
 # too. "pub" takes a key from publications.bib: the paper title is rendered as a link to

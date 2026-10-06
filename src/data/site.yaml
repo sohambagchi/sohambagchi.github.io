@@ -5,7 +5,7 @@ description: Soham Bagchi — PhD student in Computer Science at the University 
 links:
   github: https://github.com/sohambagchi
   linkedin: https://www.linkedin.com/in/soham-bagchi
-  cv: /soham-bagchi-cv.pdf        # put the PDF in public/
+  cv: /soham-bagchi-cv.pdf # put the PDF in public/
 # <meta name="description"> per section page. Never rendered on the page itself.
 page_descriptions:
   projects: Research and software projects.
